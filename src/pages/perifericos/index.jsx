@@ -31,7 +31,7 @@ const index = () => {
   }
 
   function excluir(id) {
-    if (confirm("Você tem certeza disso?")) {
+    if (confirm("Deseja apagar esse periferico?")) {
       axios.delete(`/api/perifericos/teclado/${id}`);
       axios.delete(`/api/perifericos/fone/${id}`);
       axios.delete(`/api/perifericos/mouse/${id}`);

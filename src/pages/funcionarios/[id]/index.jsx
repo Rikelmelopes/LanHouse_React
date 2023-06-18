@@ -53,7 +53,6 @@ const index = () => {
           </Card>
         </Col>
         <Col>
-          <h3>Informações:</h3>
           <div
             style={{ border: "1px solid SlateBlue", borderRadius: "5px" }}
             className="p-3"

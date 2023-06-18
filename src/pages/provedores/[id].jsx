@@ -54,7 +54,7 @@ const form = () => {
             <Form.Label>Cnpj:</Form.Label>
             <Form.Control
               type="text"
-              mask="999.999.999-99"
+              mask="99.999.999/9999-99"
               {...register("cnpj")}
               onChange={handleChange}
             />

@@ -23,7 +23,7 @@ const index = () => {
   }
 
   function excluir(id) {
-    if (confirm("Você tem certeza disso?")) {
+    if (confirm("Deseja apagar esse provedor?")) {
       axios.delete(`/api/provedores/${id}`);
       getAll();
     }
