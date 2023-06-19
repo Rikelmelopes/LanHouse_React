@@ -33,6 +33,12 @@ const Index = () => {
                   transition: "transform 0.3s ease",
                   border: "1px solid blue",
                 }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "scale(1.05)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
+                }}
               >
                 <Card.Body>
                   <Card.Title className="text-center">Intuito</Card.Title>
@@ -51,6 +57,12 @@ const Index = () => {
                   transition: "transform 0.3s ease",
                   border: "1px solid blue",
                 }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "scale(1.05)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
+                }}
               >
                 <Card.Body>
                   <Card.Title className="text-center">Informações</Card.Title>
@@ -68,6 +80,12 @@ const Index = () => {
                   boxShadow: "0 17px 10px rgba(0, 0, 0, 0.3)",
                   transition: "transform 0.3s ease",
                   border: "1px solid blue",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "scale(1.05)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
                 }}
               >
                 <Card.Body>
