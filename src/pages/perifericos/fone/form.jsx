@@ -8,6 +8,7 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { BsArrowLeftCircleFill, BsCheck2 } from "react-icons/bs";
 import { mask } from "remask";
+import NumberFormat from "react-number-format";
 
 const form = () => {
   const { push } = useRouter();
