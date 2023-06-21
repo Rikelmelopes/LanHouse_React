@@ -10,7 +10,7 @@ import { mask } from "remask";
 
 const form = () => {
   const { push, query } = useRouter();
-  const { register, handleSubmit, setValue } = useForm();
+  const { register, handleSubmit, setValue, setFocus } = useForm();
 
   useEffect(() => {
     if (query.id) {
@@ -31,6 +31,23 @@ const form = () => {
     setValue(name, mask(value, mascara));
   }
 
+  const checkCEP = (e) => {
+    if (!e.target.value) return;
+    const cep = e.target.value.replace(/\D/g, "");
+    console.log(cep);
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        // register({ name: 'address', value: data.logradouro });
+        setValue("logradouro", data.logradouro);
+        setValue("bairro", data.bairro);
+        setValue("cidade", data.localidade);
+        setValue("uf", data.uf);
+        setFocus("numero");
+      });
+  };
+
   function salvar(dados) {
     axios.put(`/api/clientes/${dados.id}`, dados);
     push("/clientes");
@@ -49,6 +66,7 @@ const form = () => {
             <Form.Label>CPF:</Form.Label>
             <Form.Control
               type="text"
+              placeholder="999.999.999-99"
               mask="999.999.999-99"
               {...register("cpf")}
               onChange={handleChange}
@@ -64,7 +82,11 @@ const form = () => {
 
           <Form.Group as={Col} controlId="email">
             <Form.Label>Email: </Form.Label>
-            <Form.Control type="email" {...register("email")} />
+            <Form.Control
+              type="email"
+              placeholder="exemplo@gmail.com"
+              {...register("email")}
+            />
           </Form.Group>
         </Row>
 
@@ -73,6 +95,7 @@ const form = () => {
             <Form.Label>Telefone: </Form.Label>
             <Form.Control
               type="tel"
+              placeholder="(99) 99999-9999"
               mask="(99) 99999-9999"
               {...register("telefone")}
               onChange={handleChange}
@@ -84,8 +107,9 @@ const form = () => {
             <Form.Control
               type="text"
               mask="99999-999"
+              placeholder="99999-999"
               {...register("cep")}
-              onChange={handleChange}
+              onBlur={checkCEP}
             />
           </Form.Group>
         </Row>

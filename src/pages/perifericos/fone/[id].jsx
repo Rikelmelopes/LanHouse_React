@@ -85,6 +85,8 @@ const form = () => {
             <Form.Label>Preço: </Form.Label>
             <Form.Control
               type="text"
+              placeholder="R$ 0,00"
+              mask={[/[1-9]/, /\d/, ",", /\d/, /\d/]}
               {...register("preco", clientesValidators.nome)}
             />
             {errors.nome && (
