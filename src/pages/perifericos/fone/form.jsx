@@ -8,7 +8,29 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { BsArrowLeftCircleFill, BsCheck2 } from "react-icons/bs";
 import { mask } from "remask";
-import NumberFormat from "react-number-format";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const schema = yup
+  .object({
+    nome: yup
+      .string()
+      .required("O Nome é Obrigatório")
+      .max(50, "Máximo de 50 caracteres"),
+    marca: yup
+      .string()
+      .required("A Marca é Obrigatório")
+      .max(50, "Máximo de 50 caracteres"),
+    modelo: yup
+      .string()
+      .required("O Modelo é Obrigatório")
+      .max(50, "Máximo de 50 caracteres"),
+    preco: yup
+      .string("Somente Numeros")
+      .required("O Preço é Obrigatório")
+      .max(50, "Máximo de 50 caracteres"),
+  })
+  .required();
 
 const form = () => {
   const { push } = useRouter();
@@ -17,7 +39,7 @@ const form = () => {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm({ resolver: yupResolver(schema) });
 
   function salvar(dados) {
     axios.post("/api/perifericos/fone", dados);
@@ -52,8 +74,8 @@ const form = () => {
               type="text"
               {...register("marca", clientesValidators.nome)}
             />
-            {errors.nome && (
-              <small className="text-danger">{errors.nome.message}</small>
+            {errors.marca && (
+              <small className="text-danger">{errors.marca.message}</small>
             )}
           </Form.Group>
         </Row>
@@ -65,8 +87,8 @@ const form = () => {
               type="text"
               {...register("modelo", clientesValidators.nome)}
             />
-            {errors.nome && (
-              <small className="text-danger">{errors.nome.message}</small>
+            {errors.modelo && (
+              <small className="text-danger">{errors.modelo.message}</small>
             )}
           </Form.Group>
 
@@ -77,8 +99,8 @@ const form = () => {
               placeholder="R$ 0,00"
               {...register("preco", clientesValidators.nome)}
             />
-            {errors.nome && (
-              <small className="text-danger">{errors.nome.message}</small>
+            {errors.preco && (
+              <small className="text-danger">{errors.preco.message}</small>
             )}
           </Form.Group>
         </Row>
