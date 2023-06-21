@@ -1,5 +1,6 @@
 import Pagina from "@/components/Pagina";
 import clientesValidators from "@/validators/clientesValidators";
+import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -8,6 +9,26 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { BsArrowLeftCircleFill, BsCheck2 } from "react-icons/bs";
 import { mask } from "remask";
+import * as yup from "yup";
+
+const schema = yup
+  .object({
+    nome: yup
+      .string("Somente Letras")
+      .required("O Nome Obrigatório")
+      .max(50, "Máximo de 50 caracteres"),
+    cnpj: yup.string().required("CNPJ Obrigatório").min(14, "Preencha o CNPJ"),
+    telefone: yup
+      .string()
+      .required("Telefone Obrigatório")
+      .min(5, "Mínimo de 5 caracteres"),
+    endereco: yup
+      .string()
+      .required("Endereço obrigatorio")
+      .min(3, "Mínimo de 3 caracteres")
+      .max(20, "Máximo de 20 caracteres"),
+  })
+  .required();
 
 const form = () => {
   const { push } = useRouter();
@@ -16,7 +37,7 @@ const form = () => {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm({ resolver: yupResolver(schema) });
 
   function salvar(dados) {
     axios.post("/api/provedores", dados);
@@ -52,6 +73,9 @@ const form = () => {
             {...register("cnpj")}
             onChange={handleChange}
           />
+          {errors.cnpj && (
+            <small className="text-danger">{errors.cnpj.message}</small>
+          )}
         </Form.Group>
 
         <Row className="mb-3">
@@ -63,16 +87,8 @@ const form = () => {
               {...register("telefone")}
               onChange={handleChange}
             />
-          </Form.Group>
-
-          <Form.Group as={Col} controlId="endereco">
-            <Form.Label>Endereço: </Form.Label>
-            <Form.Control
-              type="text"
-              {...register("endereco", clientesValidators.nome)}
-            />
-            {errors.nome && (
-              <small className="text-danger">{errors.nome.message}</small>
+            {errors.telefone && (
+              <small className="text-danger">{errors.telefone.message}</small>
             )}
           </Form.Group>
         </Row>

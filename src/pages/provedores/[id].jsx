@@ -71,14 +71,6 @@ const form = () => {
               onChange={handleChange}
             />
           </Form.Group>
-
-          <Form.Group as={Col} controlId="endereco">
-            <Form.Label>Endereço: </Form.Label>
-            <Form.Control type="text" {...register("endereco")} />
-            {errors.nome && (
-              <small className="text-danger">{errors.nome.message}</small>
-            )}
-          </Form.Group>
         </Row>
         <div className="text-center">
           <Button variant="success" onClick={handleSubmit(salvar)}>
