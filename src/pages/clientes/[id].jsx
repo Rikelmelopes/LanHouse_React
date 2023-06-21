@@ -7,10 +7,50 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { BsArrowLeftCircleFill, BsCheck2 } from "react-icons/bs";
 import { mask } from "remask";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const schema = yup
+  .object({
+    nome: yup
+      .string("Somente Letras")
+      .required("O Nome Obrigatório")
+      .max(50, "Máximo de 50 caracteres"),
+    cpf: yup.string().required("CPF Obrigatório").min(14, "Preencha o CPF"),
+    dataNascimento: yup.string().required("Data Obrigatoria"),
+    email: yup
+      .string()
+      .email("Use um email válido")
+      .required("Email é Obrigatório"),
+    telefone: yup
+      .string()
+      .required("Telefone Obrigatório")
+      .min(5, "Mínimo de 5 caracteres"),
+    cep: yup
+      .string()
+      .required("CEP Obrigatório")
+      .min(9, "Maximo de 9 caracteres"),
+    logradouro: yup
+      .string()
+      .required("Logradouro Obrigatório")
+      .min(3, "Mínimo de 3 caracteres")
+      .max(20, "Máximo de 20 caracteres"),
+    complemento: yup.string().max(20, "Máximo de 20 caracteres"),
+    numero: yup.number("Tem que ser Número"),
+    bairro: yup.string().required().max(50, "Máximo de 50 caracteres"),
+    foto: yup
+      .string()
+      .required("Foto Obrigatória")
+      .min(5, "Mínimo de 5 caracteres")
+      .url("Coloque uma URL válida"),
+  })
+  .required();
 
 const form = () => {
   const { push, query } = useRouter();
-  const { register, handleSubmit, setValue, setFocus } = useForm();
+  const { register, handleSubmit, setValue, setFocus } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   useEffect(() => {
     if (query.id) {

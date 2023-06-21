@@ -7,6 +7,8 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { BsArrowLeftCircleFill, BsCheck2 } from "react-icons/bs";
 import { mask } from "remask";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const schema = yup
   .object({
@@ -52,7 +54,7 @@ const form = () => {
     setValue,
     setFocus,
     formState: { errors },
-  } = useForm();
+  } = useForm({ resolver: yupResolver(schema) });
   const checkCEP = (e) => {
     if (!e.target.value) return;
     const cep = e.target.value.replace(/\D/g, "");
@@ -119,6 +121,9 @@ const form = () => {
               {...register("cpf")}
               onChange={handleChange}
             />
+            {errors.cpf && (
+              <small className="text-danger">{errors.cpf.message}</small>
+            )}
           </Form.Group>
         </Row>
 
@@ -130,6 +135,9 @@ const form = () => {
               type="email"
               {...register("email", { maxLength: 100 })}
             />
+            {errors.email && (
+              <small className="text-danger">{errors.email.message}</small>
+            )}
           </Form.Group>
         </Row>
 
@@ -143,6 +151,9 @@ const form = () => {
               {...register("telefone")}
               onChange={handleChange}
             />
+            {errors.telefone && (
+              <small className="text-danger"> {errors.telefone.message}</small>
+            )}
           </Form.Group>
 
           <Form.Group as={Col} controlId="cep">
@@ -153,6 +164,9 @@ const form = () => {
               {...register("cep")}
               onBlur={checkCEP}
             />
+            {errors.cep && (
+              <small className="text-danger">{errors.cep.message}</small>
+            )}
           </Form.Group>
           <Form.Group as={Col} controlId="dataNascimento">
             <Form.Label>Data de Nascimento: </Form.Label>
@@ -199,6 +213,9 @@ const form = () => {
             placeholder="Coloque sua Imagem"
             {...register("foto")}
           />
+          {errors.foto && (
+            <small className="text-danger">{errors.foto.message}</small>
+          )}
         </Form.Group>
 
         <div className="text-center">
