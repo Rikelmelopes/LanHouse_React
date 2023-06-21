@@ -22,11 +22,6 @@ const schema = yup
       .string()
       .required("Telefone Obrigatório")
       .min(5, "Mínimo de 5 caracteres"),
-    endereco: yup
-      .string()
-      .required("Endereço obrigatorio")
-      .min(3, "Mínimo de 3 caracteres")
-      .max(20, "Máximo de 20 caracteres"),
   })
   .required();
 

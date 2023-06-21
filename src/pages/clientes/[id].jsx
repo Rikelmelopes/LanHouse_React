@@ -10,7 +10,7 @@ import { mask } from "remask";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-const schema = yup
+/*const schema = yup
   .object({
     nome: yup
       .string("Somente Letras")
@@ -44,13 +44,11 @@ const schema = yup
       .min(5, "Mínimo de 5 caracteres")
       .url("Coloque uma URL válida"),
   })
-  .required();
+  .required();*/
 
 const form = () => {
   const { push, query } = useRouter();
-  const { register, handleSubmit, setValue, setFocus } = useForm({
-    resolver: yupResolver(schema),
-  });
+  const { register, handleSubmit, setValue, setFocus } = useForm({});
 
   useEffect(() => {
     if (query.id) {

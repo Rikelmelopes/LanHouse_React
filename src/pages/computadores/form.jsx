@@ -8,6 +8,37 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { BsArrowLeftCircleFill, BsCheck2 } from "react-icons/bs";
 import { mask } from "remask";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const schema = yup
+  .object({
+    marca: yup
+      .string("Somente Letras")
+      .required("A marca é Obrigatório")
+      .max(50, "Máximo de 50 caracteres"),
+    placaVideo: yup
+      .string()
+      .required("A Placa de Video Obrigatório")
+      .max(50, "Máximo de 50 caracteres"),
+    processador: yup
+      .string()
+      .required("O processador é Obrigatório")
+      .max(50, "Máximo de 50 caracteres"),
+    sistemaOperacional: yup
+      .string()
+      .max(50, "Máximo de 50 caracteres")
+      .required("O Sistema Operacional é Obrigatório"),
+    armazenamento: yup
+      .string()
+      .required("O Armazenamento é Obrigatório")
+      .max(50, "Máximo de 50 caracteres"),
+    gabinete: yup
+      .string()
+      .required("O Gabinete é Obrigatório")
+      .max(50, "Máximo de 50 caracteres"),
+  })
+  .required();
 
 const form = () => {
   const { push } = useRouter();
@@ -16,7 +47,7 @@ const form = () => {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm({ resolver: yupResolver(schema) });
 
   function salvar(dados) {
     axios.post("/api/computadores", dados);
@@ -39,8 +70,8 @@ const form = () => {
             type="text"
             {...register("marca", clientesValidators.nome)}
           />
-          {errors.nome && (
-            <small className="text-danger">{errors.nome.message}</small>
+          {errors.marca && (
+            <small className="text-danger">{errors.marca.message}</small>
           )}
         </Form.Group>
 
@@ -50,8 +81,8 @@ const form = () => {
             type="text"
             {...register("placaVideo", clientesValidators.nome)}
           />
-          {errors.nome && (
-            <small className="text-danger">{errors.nome.message}</small>
+          {errors.placaVideo && (
+            <small className="text-danger">{errors.placaVideo.message}</small>
           )}
         </Form.Group>
 
@@ -61,8 +92,8 @@ const form = () => {
             type="text"
             {...register("processador", clientesValidators.nome)}
           />
-          {errors.nome && (
-            <small className="text-danger">{errors.nome.message}</small>
+          {errors.processador && (
+            <small className="text-danger">{errors.processador.message}</small>
           )}
         </Form.Group>
 
@@ -72,8 +103,10 @@ const form = () => {
             type="text"
             {...register("sistemaOperacional", clientesValidators.nome)}
           />
-          {errors.nome && (
-            <small className="text-danger">{errors.nome.message}</small>
+          {errors.sistemaOperacional && (
+            <small className="text-danger">
+              {errors.sistemaOperacional.message}
+            </small>
           )}
         </Form.Group>
 
@@ -84,8 +117,10 @@ const form = () => {
               type="text"
               {...register("armazenamento", clientesValidators.nome)}
             />
-            {errors.nome && (
-              <small className="text-danger">{errors.nome.message}</small>
+            {errors.armazenamento && (
+              <small className="text-danger">
+                {errors.armazenamento.message}
+              </small>
             )}
           </Form.Group>
 
@@ -95,8 +130,8 @@ const form = () => {
               type="text"
               {...register("gabinete", clientesValidators.nome)}
             />
-            {errors.nome && (
-              <small className="text-danger">{errors.nome.message}</small>
+            {errors.gabinete && (
+              <small className="text-danger">{errors.gabinete.message}</small>
             )}
           </Form.Group>
         </Row>
